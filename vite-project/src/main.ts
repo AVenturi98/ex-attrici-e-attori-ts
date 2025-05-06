@@ -246,3 +246,51 @@ function updateActress(
 
 
 
+// 🎯 BONUS 3
+// Crea la funzione createRandomCouple che usa getAllActresses e getAllActors per restituire un’array che ha sempre due elementi: al primo posto una Actress casuale e al secondo posto un Actor casuale.
+
+async function getAllActors(): Promise<Actor[]> {
+
+  try {
+    const res = await fetch('https://boolean-spec-frontend.vercel.app/freetestapi/actors');
+
+    if (!res.ok) {
+      throw new Error(`Errore ${res.status} nel recupero dei dati: ${res.statusText}`)
+    }
+
+    const data: unknown = await res.json();
+
+    if (
+      !data ||
+      !(data instanceof Array)
+    ) {
+      throw new Error('Errore recupero dati')
+    }
+
+    const actrorsValid = data.filter(isActress);
+
+    return actrorsValid as Actor[]
+
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error('Errore:', err.message)
+
+    } else {
+      console.error('Errore generico:', err);
+    }
+    return [];
+  }
+}
+
+async function creacreateRandomCouplete(): Promise<[Actress, Actor] | null> {
+  const [actresses, actors] = await Promise.all([getAllActresses(), getAllActors()]);
+  if (actresses.length === 0 || actors.length === 0) {
+    return null
+  }
+
+  const randomActress = actresses[Math.floor(Math.random() * actresses.length)];
+  const randomActor = actors[Math.floor(Math.random() * actors.length)];
+
+  return [randomActress, randomActor]
+
+}
