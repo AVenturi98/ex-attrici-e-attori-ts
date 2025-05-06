@@ -197,3 +197,27 @@ async function getActresses(ids: number[]): Promise<(Actress | null)[]> {
     return [];
   }
 }
+
+
+// 🎯 BONUS 1
+// Crea le funzioni:
+
+// createActress
+// updateActress
+// Utilizza gli Utility Types:
+
+// Omit: per creare un'attrice senza passare id, che verrà generato casualmente.
+// Partial: per permettere l’aggiornamento di qualsiasi proprietà tranne id e name.
+
+const randomID = (): number => Math.floor(Math.random() * 10);
+
+function createActress(dati: Omit<Actress, 'id'>): Actress {
+  return { id: randomID(), ...dati }
+}
+
+function updateActress(
+  newActress: Actress,
+  update: Partial<Omit<Actress, 'id' | 'name'>>
+): Actress {
+  return { ...newActress, ...update }
+}
