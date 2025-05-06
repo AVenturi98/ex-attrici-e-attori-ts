@@ -31,7 +31,7 @@ type Person = {
 // Le nazionalità accettate sono: American, British, Australian, Israeli-American, South African, French, Indian, Israeli, Spanish, South Korean, Chinese.
 
 type Nazionality =
-  | 'American'
+  'American'
   | 'British'
   | 'Australian'
   | 'Israeli-American'
@@ -47,6 +47,28 @@ type Actress = Person & {
   most_famous_movies: [string, string, string],
   awards: string,
   nationality: Nazionality
+}
+
+
+// 🎯 BONUS 2
+// Crea un tipo Actor, che estende Person con le seguenti differenze rispetto ad Actress:
+
+// known_for: una tuple di 3 stringhe
+// awards: array di una o due stringhe
+// nationality: le stesse di Actress più:
+// Scottish, New Zealand, Hong Kong, German, Canadian, Irish.
+// Implementa anche le versioni getActor, getAllActors, getActors, createActor, updateActor.
+
+type Actor = Person & {
+  known_for: [string, string, string],
+  awards: [string] | [string, string],
+  nationality: Nazionality |
+  'Scottish' |
+  'New Zealand' |
+  'Hong Kong' |
+  'German' |
+  'Canadian' |
+  'Irish'
 }
 
 
@@ -221,3 +243,6 @@ function updateActress(
 ): Actress {
   return { ...newActress, ...update }
 }
+
+
+
