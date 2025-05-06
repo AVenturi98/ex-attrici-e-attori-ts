@@ -126,3 +126,45 @@ async function getActress(id: number): Promise<Actress | null> {
   }
 
 }
+
+
+// 📌 Milestone 4
+// Crea una funzione getAllActresses che chiama:
+
+// GET https://boolean-spec-frontend.vercel.app/freetestapi/actresses
+// La funzione deve restituire un array di oggetti Actress.
+
+// Può essere anche un array vuoto.
+
+async function getAllActresses(): Promise<Actress[]> {
+
+  try {
+    const res = await fetch('https://boolean-spec-frontend.vercel.app/freetestapi/actresses');
+
+    if (!res.ok) {
+      throw new Error(`Errore ${res.status} nel recupero dei dati: ${res.statusText}`)
+    }
+
+    const data: unknown = await res.json();
+
+    if (
+      !data ||
+      !(data instanceof Array)
+    ) {
+      throw new Error('Errore recupero dati')
+    }
+
+    const actressesValid = data.filter(isActress);
+
+    return actressesValid as Actress[]
+
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error('Errore:', err.message)
+
+    } else {
+      console.error('Errore generico:', err);
+    }
+    return [];
+  }
+}
